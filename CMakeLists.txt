@@ -6,13 +6,15 @@ add_subdirectory(User Driver)
 # 添加头文件路径
 include_directories(Driver)
 
-
-
-
 # message("PROJECT_VERSION ="  ${PROJECT_VERSION_MAJOR} "-" ${PROJECT_VERSION_MINOR} - ${PROJECT_VERSION_PATCH})
 # message(STATUS ${tttt})
 # configure_file(config.in config.h)
 #cmakedefine tttt
+
+# 变量追加内容
+list(APPEND 变量名  值)
+
+
 
 
 # set(SRC_LIST main.c)

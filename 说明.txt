@@ -17,9 +17,41 @@ set(变量名 变量内容1 变量内容2 ...):
     2.变量内容可以是字符串，符号，也可以是另一个变量，如${另一个变量名}
     3.cmake有内置变量，不同内置变量有不同的作用，有控制类型，指示类型等，具体参看 https://cmake.org/cmake/help/latest/manual/cmake-variables.7.html
    
+
+
+
 unset(变量名):
     删除变量
 
+
+
+#将路径下的左右文件添加到变量中
+aux_source_directory(路径 变量名)
+
+
+
+#生成库文件
+add_library(库名 [STATIC SHARE] 源文件)
+
+
+
+# 添加子CMakeLists.txt路径(指包含CMakeLists.txt的路径)
+add_subdirectory(路径1 路径2 ...)
+
+
+# 添加头文件路径
+include_directories(路径1 路径2 ...)
+
+
+
+# 变量追加内容
+list(APPEND 变量名  值)
+
+
+
+
+常用系统定义变量：
+CMAKE_CURRENT_SOURCE_DIR : 当前CMakeLists.txt所在路径
 
 message(输出类型 "输出字符串" ${SRC_LIST})
 输出类型：必须大写
