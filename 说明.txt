@@ -19,9 +19,11 @@ set(变量名 变量内容1 变量内容2 ...):
    
 
 
-
+#变量都是以字符串的形式存在
 unset(变量名):
     删除变量
+
+# 变量类型：普通，环境，缓存
 
 
 
@@ -43,10 +45,51 @@ add_subdirectory(路径1 路径2 ...)
 include_directories(路径1 路径2 ...)
 
 
+#分号的作用
+用来分隔多个变量(类似于数组中的逗号)
+例如:set(varrr 1;2;3)
+varrr[0]=1
+varrr[1]=2
+varrr[2]=3
 
 # 变量追加内容
 list(APPEND 变量名  值)
 
+#获取变量个数到len中
+list(LENGTH 变量名 len)
+
+# 获取列表中第N个数据到Data中(N从0开始)
+list(GET 变量 N Data)
+
+# 查找Data在变量中的位置，并写入到Pos中，值为-1则未找到
+list(FIND 变量 Data Pos)
+
+
+
+
+file(GLOB SOURCE "" )
+
+
+
+
+
+#多行注释
+#[=[
+注释内容
+#]=]
+
+
+
+#直接在当前目录生成源文件，其内容为[=[...]=]之间的内容
+file(WRITE "test.c"
+[=[
+#include <stdio.h>
+void test_Task(void)
+{
+    printf("LED_Task Run !! \r\n");
+}
+]=]
+)
 
 
 
