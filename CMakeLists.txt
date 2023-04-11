@@ -1,27 +1,22 @@
-cmake_minimum_required(VERSION 3.26.0)
+cmake_minimum_required(VERSION 3.20.0)
+
 project(CMAKE VERSION 1.0.3 LANGUAGES C)
 
-# 添加源文件路径
-add_subdirectory(User Driver)
-# 添加头文件路径
-include_directories(Driver)
 
-# message("PROJECT_VERSION ="  ${PROJECT_VERSION_MAJOR} "-" ${PROJECT_VERSION_MINOR} - ${PROJECT_VERSION_PATCH})
-# message(STATUS ${tttt})
-# configure_file(config.in config.h)
-#cmakedefine tttt
+# 添加头文件路径,具体到.h
+include_directories("./APP")
+include_directories("./Driver/BEEP")
+include_directories("./Driver/KEY")
+include_directories("./Driver/LED")
+include_directories("./USER/SPI/include")
+include_directories("./USER/IIC/include")
 
-# 变量追加内容
-list(APPEND 变量名  值)
+# add_subdirectory必须在include_directories之后！！！！！！
+# 添加子模块的 CMakeLists.txt 路径
+add_subdirectory("./APP")
+add_subdirectory("./Driver")
+add_subdirectory("./USER")
 
-
-
-
-# set(SRC_LIST main.c)
-# message(STATUS "Bin File Dir " ${BIN_FIR})
-# message(STATUS "Src File Dir " ${SRC_FIR})
-# message(STATUS "SRC_LIST = " ${SRC_LIST})
-# add_executable(main ${SRC_LIST})
 
 
 
