@@ -114,6 +114,8 @@ configure_file(输入文件.in 输出文件)
 
 
 ${变量名}：为取变量内容，在if条件判断中，可不加${}
+当局部变量和全局变量重名时，局部优先级大于全局
+
 
 变量的作用域：由顶层向下传递，值传递
 同级txt中的变量不可直接访问
@@ -133,7 +135,7 @@ add_executable(生成的目标文件名 依赖文件1.c 依赖文件2.c .....)
     endif()
 
 函数语句
-    定义：
+    定义：必须有返回值！！！！
         function(函数名 参数1 参数2)
             ......
             
@@ -144,8 +146,29 @@ add_executable(生成的目标文件名 依赖文件1.c 依赖文件2.c .....)
 
 
 
+宏：和C中宏的含义和用法差不多
+    定义：建议宏名小写
+        macro(宏名 [参数])
+        内容....
+        endmacro()
+
+注：参数只是形参,作用域只有宏内,且形参无法被更改，任何更改形参的操作都无效！！！！
 
 
+
+
+比较运算：
+    EQUAL:相等
+    NOT EQUAL:不相等
+    LESS:小于
+    GREATER:大于
+    LESS EQUAL:小于等于
+    GREATER EQUAL:大于等于
+
+逻辑运算：
+    NOT 条件：
+    条件1 AND 条件2
+    条件1 OR 条件2
 
 https://www.bilibili.com/video/BV1nU4y1B7mJ/?p=3&spm_id_from=pageDriver&vd_source=41b642be40ce1ad94fe112cebcb48a3c
 

@@ -29,6 +29,19 @@ message(${POS})
 message(Length: ${len})
 
 
+message(==================)
+macro(Macroname indata)
+    set(indata "Change")
+    set(varM "Change")
+    message(Macro info : ${indata})
+endmacro()
+
+set(varM "before")
+message(Value 1: ${varM})
+Macroname("NO change")
+message(Value 2: ${varM})
+
+message(==================)
 
 
 
