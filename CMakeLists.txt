@@ -29,19 +29,39 @@ message(${POS})
 message(Length: ${len})
 
 
-message(==================)
-macro(Macroname indata)
-    set(indata "Change")
-    set(varM "Change")
-    message(Macro info : ${indata})
-endmacro()
 
-set(varM "before")
-message(Value 1: ${varM})
-Macroname("NO change")
-message(Value 2: ${varM})
 
-message(==================)
+
+
+
+# message(==================)
+# function(Macroname indata)
+#     set(indata "Change")
+#     # set(varM "Change")
+#     message(Macro info : ${indata})
+# endfunction()
+
+# set(varM "before")
+# message(Value 1: ${varM})
+# Macroname("NO change")
+# message(Value 2: ${varM})
+
+# message(==================)
+
+# if(varM)
+#     message("YES")
+# else()
+#     message("NO")
+# endif()
+
+
+set(num 0 1 2 3)
+set(char A B C D)
+
+foreach(Var IN ZIP_LISTS num char)
+    message(num "${Var_0}")
+    message(cahr "${Var_1}")
+endforeach()
 
 
 
