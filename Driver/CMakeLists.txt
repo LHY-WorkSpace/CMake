@@ -6,5 +6,5 @@ cmake_minimum_required(VERSION 3.21)
 add_subdirectory(BEEP)
 add_subdirectory(KEY)
 add_subdirectory(LED)
-
+add_subdirectory(FastMath)
 

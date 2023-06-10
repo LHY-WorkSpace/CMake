@@ -8,8 +8,10 @@ include_directories("./APP")
 include_directories("./Driver/BEEP")
 include_directories("./Driver/KEY")
 include_directories("./Driver/LED")
+include_directories("./Driver/FastMath")
 include_directories("./USER/SPI/include")
 include_directories("./USER/IIC/include")
+
 
 # add_subdirectory必须在include_directories之后！！！！！！
 # 添加子模块的 CMakeLists.txt 路径
