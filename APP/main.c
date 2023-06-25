@@ -1,20 +1,21 @@
-#include<stdio.h>
-#include<stddef.h>
-#include<stdlib.h>
-#include<string.h>
-#include "BEEP.h"
-#include "KEY.h"
-#include "LED.h"
-#include "SPI.h"
-#include "IIC.h"
+#include <stdio.h>
+#include <stddef.h>
+#include <stdlib.h>
+#include <string.h>
 #include "MathFun.h"
 #include "DataType.h"
+#include "PID.h"
 
 
-#define iq	(10.0f)
-#define id	(100.0f)
+float Ualpha =  0.0; 
+float Ubeta =   0.0; 
+
+float iq;
+float id;
 
 
+
+// 帕克逆变换+克拉克逆变换
 float IA(float Angle)
 {
 	float Temp;
@@ -38,38 +39,60 @@ float IC(float Angle)
 
 
 
+void Mypwmtest(float Uq,float Ud, float Angle)
+{	
+    float I[3];
 
-void main()
+    iq = Uq;
+    id = Ud;
+
+    I[0] = IA(Angle)+12.0f/2;
+    I[1] = IB(Angle)+12.0f/2;
+    I[2] = IC(Angle)+12.0f/2;
+
+	printf("Angle:%.2f Ia:%.2f Ib:%.2f Ic:%.2f\r\n",Angle,I[0]*100/12.0f,I[1]*100/12.0f,I[2]*100/12.0f);
+}
+
+
+
+void pwmtest(float Uq,float Ud, float Angle)
 {
+    float Ua,Ub,Uc;
+    float Ualpha,Ubeta; 
 
-	static float Angle  = 0.0f;
-	float I[3];
-    u8 i;
+    Ualpha =  -Uq*FastSin(DEGTORAD(Angle)); 
+    Ubeta =   Uq*FastCos(DEGTORAD(Angle)); 
+
+    // 克拉克逆变换
+    Ua = Ualpha + 12.0f/2;
+    Ub = (sqrt(3)*Ubeta-Ualpha)/2 + 12.0f/2;
+    Uc = (-Ualpha-sqrt(3)*Ubeta)/2 + 12.0f/2;
+
+    printf("Angle:%.2f Ia:%d Ib:%d Ic:%d\r\n",Angle,(unsigned char)(Ua*100/12.0f),(unsigned char)(Ub*100/12.0f),(unsigned char)(Uc*100/12.0f));
+
+}
 
 
-    for ( i = 0; i < 365; i++)
+
+
+
+int main()
+{
+    u16 i;
+
+    for ( i = 0; i < 359; i++)
     {
-        I[0] = IA(Angle);
-        I[1] = IB(Angle);
-        I[2] = IC(Angle);
-        
-        Angle++;
-
-        printf("Angle:%.2f          Ia:%.2f        Ib:%.2f          Ic:%.2f\r\n",Angle,I[0],I[1],I[2]);
-
-        if(Angle >= 360.0f)
-        {
-           break;
-        }
-
+        pwmtest(4,0,i);
     }
-    
-
-
+    printf("========================\r\n");
+    for ( i = 0; i < 359; i++)
+    {
+        Mypwmtest(4,0,i);
+    }
 
     while (1)
     {
-        /* code */
+
     }
     
 }

@@ -21,14 +21,14 @@ add_subdirectory("./USER")
 
 
 
-set(varrr 1;2;3;4;5;6;7)
-list(LENGTH varrr len)
+# set(varrr 1;2;3;4;5;6;7)
+# list(LENGTH varrr len)
 
-list(FIND varrr 8 POS)
+# list(FIND varrr 8 POS)
 
-message(${POS})
+# message(${POS})
 
-message(Length: ${len})
+# message(Length: ${len})
 
 
 
