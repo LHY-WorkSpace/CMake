@@ -53,22 +53,38 @@ void Mypwmtest(float Uq,float Ud, float Angle)
 	printf("Angle:%.2f Ia:%.2f Ib:%.2f Ic:%.2f\r\n",Angle,I[0]*100/12.0f,I[1]*100/12.0f,I[2]*100/12.0f);
 }
 
+float LimitAngle(float shaft_angle) 
+{
+  return (float)((int)shaft_angle % 360);
+}
+
+
+//求电角度
+float ElectricalAngle(float shaft_angle, int pole_pairs) 
+{
+  return (shaft_angle * (float)pole_pairs);
+}
 
 
 void pwmtest(float Uq,float Ud, float Angle)
 {
     float Ua,Ub,Uc;
     float Ualpha,Ubeta; 
+    float angtmp;
 
-    Ualpha =  -Uq*FastSin(DEGTORAD(Angle)); 
-    Ubeta =   Uq*FastCos(DEGTORAD(Angle)); 
+    angtmp = LimitAngle(Angle);
+    angtmp = ElectricalAngle(angtmp,6);
+    angtmp = LimitAngle(angtmp);
+
+    Ualpha =  -Uq*FastSin(DEGTORAD(angtmp)); 
+    Ubeta =   Uq*FastCos(DEGTORAD(angtmp)); 
 
     // 克拉克逆变换
     Ua = Ualpha + 12.0f/2;
     Ub = (sqrt(3)*Ubeta-Ualpha)/2 + 12.0f/2;
     Uc = (-Ualpha-sqrt(3)*Ubeta)/2 + 12.0f/2;
 
-    printf("Angle:%.2f Ia:%d Ib:%d Ic:%d\r\n",Angle,(unsigned char)(Ua*100/12.0f),(unsigned char)(Ub*100/12.0f),(unsigned char)(Uc*100/12.0f));
+    printf("AngleIn:%.2f AngleLimt:%.2f I:%d I:%d I:%d\r\n",Angle,angtmp,(unsigned char)(Ua*100/12.0f),(unsigned char)(Ub*100/12.0f),(unsigned char)(Uc*100/12.0f));
 
 }
 
@@ -78,16 +94,11 @@ void pwmtest(float Uq,float Ud, float Angle)
 
 int main()
 {
-    u16 i;
+    u32 i;
 
-    for ( i = 0; i < 359; i++)
+    for ( i = 0; i < 3600; i++)
     {
-        pwmtest(4,0,i);
-    }
-    printf("========================\r\n");
-    for ( i = 0; i < 359; i++)
-    {
-        Mypwmtest(4,0,i);
+        pwmtest(6,0,(float)i);
     }
 
     while (1)
