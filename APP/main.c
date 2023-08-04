@@ -12,7 +12,7 @@ float Ubeta =   0.0;
 
 float iq;
 float id;
-
+PID_t Pos_pid;
 
 
 // 帕克逆变换+克拉克逆变换
@@ -96,9 +96,17 @@ int main()
 {
     u32 i;
 
-    for ( i = 0; i < 3600; i++)
+  PID_Init(&Pos_pid);
+
+  PID_Change_Kp(&Pos_pid,0.15);
+  // PID_Change_Ki(&Pos_pid,0.05);
+  PID_Change_Kd(&Pos_pid,0.2);
+
+    for ( i = 0; i < 100; i++)
     {
-        pwmtest(6,0,(float)i);
+        //pwmtest(6,0,(float)i);
+        printf("%.3f\n",PID_Process(&Pos_pid,100.0));
+
     }
 
     while (1)
